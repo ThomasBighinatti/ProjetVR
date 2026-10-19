@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636010964e8f865478e143efb3eae26a, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: Assembly-CSharp::Objects
-  objectName: 
-  description: 
-  value: 0
-  modifiers: 
+  objectName: Objet de test
+  description: Objet de test pour tester le test
+  value: 300
+  modifiers: 000000000a00000001000000i
