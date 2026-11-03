@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -6,9 +7,27 @@ public class CartonManager : MonoBehaviour
     public static CartonManager Instance;
 
     [SerializeField] private GameObject objectToPool;
-    [SerializeField] private int amountToPool = 20;
-    [SerializeField] private int maxSize = 100;
+    [SerializeField] private int amountToPool = 2;
+    [SerializeField] private int maxSize = 5;
+    
 
+    private event Action<bool> OnOrderCompleted; 
+    private bool _isOrderCompleted = false;
+
+    public bool IsOrderCompleted
+    {
+        get => _isOrderCompleted;
+        set
+        {
+            if (_isOrderCompleted != value)
+            {
+                _isOrderCompleted = value;
+                OnOrderCompleted?.Invoke(value);
+            }
+            
+        }
+    }
+    
     private ObjectPool<GameObject> _pool;
 
     private void Awake()
@@ -28,6 +47,17 @@ public class CartonManager : MonoBehaviour
             defaultCapacity: amountToPool,
             maxSize: maxSize
         );
+        
+    }
+
+    private void OnEnable()
+    {
+        //CartonManager.Instance.OnOrderCompleted += (resetbox + donner argent + effet si besoin);
+    }
+
+    private void OnDisable()
+    {
+        //CartonManager.Instance.OnOrderCompleted -= (resetbox + donner argent + effet si besoin);
     }
 
     private GameObject CreateBox() => Instantiate(objectToPool);
@@ -44,4 +74,10 @@ public class CartonManager : MonoBehaviour
     {
         _pool.Release(box);
     }
+
+    public void ResetBox(GameObject box)
+    {
+        // reset manuellement chaque component
+    }
+    
 }
