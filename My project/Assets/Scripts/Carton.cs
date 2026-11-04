@@ -12,31 +12,46 @@ public class Carton : MonoBehaviour
     }
 
     public state currentState;
-    public List<BaseObject> objectsInCarton;
 
-    private HashSet<ObjectData.Type> listTypeObjectCommand;
-    private HashSet<ObjectData.Type> listTypeObjectSecurity;
+    public HashSet<ObjectData.Type> listTypeObjectCommand = new HashSet<ObjectData.Type>();
+    public HashSet<ObjectData.Type> listTypeObjectSecurity = new HashSet<ObjectData.Type>();
 
-    private Dictionary<string, int> listObjectInCarton;
-    private Dictionary<string, int> listObjectSecurityInCarton;
-
+    public Dictionary<SellingObject, int> listObjectInCarton = new Dictionary<SellingObject, int>();
+    
     
     private void OnTriggerEnter(Collider other)
     {
-        objectsInCarton.Add(other.GetComponent<BaseObject>());
+        SellingObject sellingObject = other.GetComponent<SellingObject>();
+        SecurityObject securityObject = other.GetComponent<SecurityObject>();
 
-        if (other.GetComponent<SellingObject>())
+        
+        if (sellingObject != null)
         {
-            listObjectInCarton.Add(other.GetComponent<SellingObject>().objectData.objectID, 1);
+            Debug.Log("Détection objet a vendre");
+            if (!listObjectInCarton.ContainsKey(sellingObject))
+            {
+                listObjectInCarton.Add(sellingObject, 0);
+            }
+            listObjectInCarton[sellingObject]++;
+            foreach (var type in sellingObject.objectData.types)
+            {
+                listTypeObjectCommand.Add(type);
+            }
+            Debug.Log(String.Join(",",listTypeObjectCommand));
+            Debug.Log(String.Join(",",listObjectInCarton));
+
         }
-        if (other.GetComponent<SecurityObject>())
+        if (securityObject != null)
         {
-            listObjectSecurityInCarton.Add(other.GetComponent<SecurityObject>().objectData.objectID, 1);
+            Debug.Log("Détection objet de sécurité");
+            listTypeObjectSecurity.Add(securityObject.objectData.types[0]);
+            Debug.Log(String.Join(",",listTypeObjectSecurity));
         }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        objectsInCarton.Remove(other.GetComponent<BaseObject>());
+        
     }
 }

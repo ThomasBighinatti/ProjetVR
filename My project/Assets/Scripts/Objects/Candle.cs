@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Candle : BaseObject, IFlammable
+public class Candle : SellingObject, IFlammable
 {
     public void catchFire()
     {
