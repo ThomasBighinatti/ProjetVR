@@ -13,10 +13,10 @@ public class Carton : MonoBehaviour
 
     public state currentState;
 
-    public HashSet<ObjectData.Type> listTypeObjectCommand = new HashSet<ObjectData.Type>();
-    public HashSet<ObjectData.Type> listTypeObjectSecurity = new HashSet<ObjectData.Type>();
+    public Dictionary<ObjectData.Type, int> listTypeObjectCommand = new Dictionary<ObjectData.Type, int>();
+    public Dictionary<ObjectData.Type, int> listTypeObjectSecurity = new Dictionary<ObjectData.Type, int>();
 
-    public Dictionary<SellingObject, int> listObjectInCarton = new Dictionary<SellingObject, int>();
+    public Dictionary<string , int> listObjectInCarton = new Dictionary<string, int>();
     
     
     private void OnTriggerEnter(Collider other)
@@ -28,14 +28,19 @@ public class Carton : MonoBehaviour
         if (sellingObject != null)
         {
             Debug.Log("Détection objet a vendre");
-            if (!listObjectInCarton.ContainsKey(sellingObject))
+            if (!listObjectInCarton.ContainsKey(sellingObject.objectID))
             {
-                listObjectInCarton.Add(sellingObject, 0);
+                listObjectInCarton.Add(sellingObject.objectID, 0);
             }
-            listObjectInCarton[sellingObject]++;
+            listObjectInCarton[sellingObject.objectID]++;
             foreach (var type in sellingObject.objectData.types)
             {
-                listTypeObjectCommand.Add(type);
+                if (!listTypeObjectCommand.ContainsKey(type))
+                {
+                    listTypeObjectCommand.Add(type, 0);
+                }
+
+                listTypeObjectCommand[type]++;
             }
             Debug.Log(String.Join(",",listTypeObjectCommand));
             Debug.Log(String.Join(",",listObjectInCarton));
@@ -44,7 +49,11 @@ public class Carton : MonoBehaviour
         if (securityObject != null)
         {
             Debug.Log("Détection objet de sécurité");
-            listTypeObjectSecurity.Add(securityObject.objectData.types[0]);
+            if (!listTypeObjectSecurity.ContainsKey(securityObject.objectData.types[0]))
+            {
+                listTypeObjectSecurity.Add(securityObject.objectData.types[0],0);
+            }
+            listTypeObjectSecurity[securityObject.objectData.types[0]]++;
             Debug.Log(String.Join(",",listTypeObjectSecurity));
         }
         
@@ -52,6 +61,39 @@ public class Carton : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        SellingObject sellingObject = other.GetComponent<SellingObject>();
+        SecurityObject securityObject = other.GetComponent<SecurityObject>();
+
         
+        if (sellingObject != null)
+        {
+            Debug.Log("Détection objet a vendre");
+            listObjectInCarton[sellingObject.objectID]--;
+            if (listObjectInCarton[sellingObject.objectID] <= 0)
+            {
+                listObjectInCarton.Remove(sellingObject.objectID);
+            }
+            foreach (var type in sellingObject.objectData.types)
+            {
+                listTypeObjectCommand[type]--;
+                if (listTypeObjectCommand[type] <= 0)
+                {
+                    listTypeObjectCommand.Remove(type);
+                }
+            }
+            Debug.Log(String.Join(",",listTypeObjectCommand));
+            Debug.Log(String.Join(",",listObjectInCarton));
+
+        }
+        if (securityObject != null)
+        {
+            Debug.Log("Détection objet de sécurité");
+            listTypeObjectSecurity[securityObject.objectData.types[0]]--;
+            if (listTypeObjectSecurity[securityObject.objectData.types[0]] <= 0)
+            {
+                listTypeObjectSecurity.Remove(securityObject.objectData.types[0]);
+            }
+            Debug.Log(String.Join(",",listTypeObjectSecurity));
+        }
     }
 }
