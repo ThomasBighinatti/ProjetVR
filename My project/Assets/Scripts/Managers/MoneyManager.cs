@@ -12,8 +12,8 @@ public class MoneyManager : MonoBehaviour
     }
     private int _money;
     
-    private void AddMoney(int amount) => _money += amount;
-    private void RemoveMoney(int amount) => _money -= amount;
-    private void SetMoney(int amount) => _money = amount;
+    public void AddMoney(int amount) => _money += amount;
+    public void RemoveMoney(int amount) => _money -= amount;
+    public void SetMoney(int amount) => _money = amount;
     
 }
