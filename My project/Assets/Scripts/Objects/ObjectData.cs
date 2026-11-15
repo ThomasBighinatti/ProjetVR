@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ObjectData", menuName = "Scriptable Objects/ObjectData")]
 public class ObjectData : ScriptableObject
 {
-    public int cost; //combien il coute au joueur
-    public int price; //combien il rapporte une fois vendu
+    public int price; //combien il coute au joueur
+    public int profit; //combien il rapporte une fois vendu
 
     public enum Type
     {
@@ -15,4 +15,5 @@ public class ObjectData : ScriptableObject
     }
 
     public List<Type> types;
+    public string objectID;
 }

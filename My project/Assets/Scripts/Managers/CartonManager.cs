@@ -9,6 +9,8 @@ public class CartonManager : MonoBehaviour
     [SerializeField] private GameObject objectToPool;
     [SerializeField] private int amountToPool = 2;
     [SerializeField] private int maxSize = 5;
+
+    public Carton currentCarton;
     
 
     private event Action<bool> OnOrderCompleted; 
@@ -79,5 +81,9 @@ public class CartonManager : MonoBehaviour
     {
         // reset manuellement chaque component
     }
-    
+
+    private void Start()
+    {
+        currentCarton = objectToPool.GetComponentInChildren<Carton>();
+    }
 }

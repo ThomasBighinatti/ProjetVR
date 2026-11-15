@@ -28,11 +28,11 @@ public class Carton : MonoBehaviour
         if (sellingObject != null)
         {
             Debug.Log("Détection objet a vendre");
-            if (!listObjectInCarton.ContainsKey(sellingObject.objectID))
+            if (!listObjectInCarton.ContainsKey(sellingObject.objectData.objectID))
             {
-                listObjectInCarton.Add(sellingObject.objectID, 0);
+                listObjectInCarton.Add(sellingObject.objectData.objectID, 0);
             }
-            listObjectInCarton[sellingObject.objectID]++;
+            listObjectInCarton[sellingObject.objectData.objectID]++;
             foreach (var type in sellingObject.objectData.types)
             {
                 if (!listTypeObjectCommand.ContainsKey(type))
@@ -68,10 +68,10 @@ public class Carton : MonoBehaviour
         if (sellingObject != null)
         {
             Debug.Log("Détection objet a vendre");
-            listObjectInCarton[sellingObject.objectID]--;
-            if (listObjectInCarton[sellingObject.objectID] <= 0)
+            listObjectInCarton[sellingObject.objectData.objectID]--;
+            if (listObjectInCarton[sellingObject.objectData.objectID] <= 0)
             {
-                listObjectInCarton.Remove(sellingObject.objectID);
+                listObjectInCarton.Remove(sellingObject.objectData.objectID);
             }
             foreach (var type in sellingObject.objectData.types)
             {
