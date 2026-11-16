@@ -20,7 +20,7 @@ public class CartonManager : MonoBehaviour
     [SerializeField] private int rewardPerBox = 10;
 
     private ObjectPool<GameObject> _pool;
-    private GameObject _currentBox;
+    public GameObject currentBox;
     private bool _isBusy;
 
     private void Awake()
@@ -44,7 +44,7 @@ public class CartonManager : MonoBehaviour
 
     private void Start()
     {
-        _currentBox = SpawnBox(restPoint.position); //premier carton prcq bah sinon y'en a pas
+        currentBox = SpawnBox(restPoint.position); //premier carton prcq bah sinon y'en a pas
     }
 
     private void Update()
@@ -81,13 +81,13 @@ public class CartonManager : MonoBehaviour
     {
         _isBusy = true;
         
-        yield return MoveBox(_currentBox, endPoint.position);
+        yield return MoveBox(currentBox, endPoint.position);
         
-        DespawnBox(_currentBox);
+        DespawnBox(currentBox);
         //MoneyManager.Instance.AddMoney(rewardPerBox); 
         
-        _currentBox = SpawnBox(spawnPoint.position);
-        yield return MoveBox(_currentBox, restPoint.position);
+        currentBox = SpawnBox(spawnPoint.position);
+        yield return MoveBox(currentBox, restPoint.position);
 
         _isBusy = false;
     }

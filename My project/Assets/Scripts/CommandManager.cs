@@ -46,7 +46,7 @@ public class CommandManager : MonoBehaviour
 
     public bool ValidateCommand()
     {
-        Dictionary<string, int> commandInCarton = CartonManager.Instance.currentCarton.listObjectInCarton;
+        Dictionary<string, int> commandInCarton = CartonManager.Instance.currentBox.GetComponentInChildren<Carton>().listObjectInCarton;
         Dictionary<string, int> commandToDo = currentCommand.objectsIDCount;
 
         if (commandInCarton.Count != commandToDo.Count)
