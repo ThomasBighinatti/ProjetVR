@@ -10,9 +10,7 @@ public class InputTest : MonoBehaviour
     private void Update()
     {
         float value = actionValue.action.ReadValue<float>();
-        Debug.Log("Value : " + value);
         
         bool button = actionButton.action.IsPressed();
-        Debug.Log("Button : " + button);
     }
 }

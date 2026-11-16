@@ -97,4 +97,22 @@ public class Carton : MonoBehaviour
             Debug.Log(String.Join(",",listTypeObjectSecurity));
         }
     }
+
+    public bool VerifySecurity()
+    {
+        if (listTypeObjectCommand.Count != listTypeObjectSecurity.Count)
+        {
+            return false;
+        }
+
+        foreach (var objects in listTypeObjectSecurity)
+        {
+            if (!listTypeObjectCommand.TryGetValue(objects.Key, out int currentValue) || currentValue != objects.Value)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

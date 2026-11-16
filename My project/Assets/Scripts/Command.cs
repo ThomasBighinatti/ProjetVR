@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Command : MonoBehaviour
+public class Command 
 {
     public int totalCommandprofit;
     [SerializeField] public Dictionary<string, int> objectsIDCount = new Dictionary<string, int>();    

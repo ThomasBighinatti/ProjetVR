@@ -19,7 +19,7 @@ public class CommandManager : MonoBehaviour
 
     [SerializeField] private List<ObjectData> listPossibleObjects;
 
-    public Command currentCommand;
+    private Command currentCommand;
 
     private void Start()
     {
@@ -55,11 +55,19 @@ public class CommandManager : MonoBehaviour
 
     public bool ValidateCommand()
     {
-        Dictionary<string, int> commandInCarton = CartonManager.Instance.currentBox.GetComponentInChildren<Carton>().listObjectInCarton;
+        Carton currentCarton = CartonManager.Instance.currentBox.GetComponentInChildren<Carton>();
+        Dictionary<string, int> commandInCarton = currentCarton.listObjectInCarton;
         Dictionary<string, int> commandToDo = currentCommand.objectsIDCount;
 
+        if (!currentCarton.VerifySecurity())
+        {
+            Debug.Log("La sécurité n'est pas bonne");
+            return false;
+        }
+        
         if (commandInCarton.Count != commandToDo.Count)
         {
+            Debug.Log("Commande pas bonne");
             return false;
         }
 
@@ -67,10 +75,12 @@ public class CommandManager : MonoBehaviour
         {
             if (!commandToDo.TryGetValue(objects.Key, out int currentValue) || currentValue != objects.Value)
             {
+                Debug.Log("Commande pas bonne");
                 return false;
             }
         }
-
+        
+        Debug.Log("Commande bien éxécuté !");
         return true;
     }
 }
