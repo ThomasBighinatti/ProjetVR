@@ -4,10 +4,11 @@ using UnityEngine;
 public class Command : MonoBehaviour
 {
     public int totalCommandprofit;
-    public Dictionary<string, int> objectsIDCount = new Dictionary<string, int>();    
+    [SerializeField] public Dictionary<string, int> objectsIDCount = new Dictionary<string, int>();    
     
     public Command(List<ObjectData> listObjects)
     {
+        Debug.Log(string.Join(",", listObjects));
         foreach (var obj in listObjects)
         {
             totalCommandprofit += obj.profit;

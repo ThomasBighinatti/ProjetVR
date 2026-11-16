@@ -26,6 +26,15 @@ public class CommandManager : MonoBehaviour
         CreateCommand();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("test");
+            Debug.Log(ValidateCommand());
+        }
+    }
+
     public void CreateCommand()
     {
         currentCommand = new Command(GenerateRandomCommand());
@@ -37,7 +46,7 @@ public class CommandManager : MonoBehaviour
         int taille = Random.Range(3, 6);
         for (int i = 0; i < taille; i++)
         {
-            int randomObject = Random.Range(0, listPossibleObjects.Count + 1);
+            int randomObject = Random.Range(0, listPossibleObjects.Count);
             listCommand.Add(listPossibleObjects[randomObject]);
         }
         return listCommand;

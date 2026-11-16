@@ -13,10 +13,11 @@ public class Carton : MonoBehaviour
 
     public state currentState;
 
-    public Dictionary<ObjectData.Type, int> listTypeObjectCommand = new Dictionary<ObjectData.Type, int>();
-    public Dictionary<ObjectData.Type, int> listTypeObjectSecurity = new Dictionary<ObjectData.Type, int>();
+    [SerializeField] private Dictionary<ObjectData.Type, int> listTypeObjectCommand = new Dictionary<ObjectData.Type, int>();
+    [SerializeField] private Dictionary<ObjectData.Type, int> listTypeObjectSecurity = new Dictionary<ObjectData.Type, int>();
 
-    public Dictionary<string , int> listObjectInCarton = new Dictionary<string, int>();
+    [SerializeField] public Dictionary<string , int> listObjectInCarton = new Dictionary<string, int>();
+    
     
     
     private void OnTriggerEnter(Collider other)
