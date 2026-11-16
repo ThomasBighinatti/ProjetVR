@@ -100,19 +100,9 @@ public class Carton : MonoBehaviour
 
     public bool VerifySecurity()
     {
-        if (listTypeObjectCommand.Count != listTypeObjectSecurity.Count)
-        {
-            return false;
-        }
+        var commandKeys = new HashSet<ObjectData.Type>(listTypeObjectCommand.Keys);
+        var securityKeys = new HashSet<ObjectData.Type>(listTypeObjectSecurity.Keys);
 
-        foreach (var objects in listTypeObjectSecurity)
-        {
-            if (!listTypeObjectCommand.TryGetValue(objects.Key, out int currentValue) || currentValue != objects.Value)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return commandKeys.SetEquals(securityKeys);
     }
 }
