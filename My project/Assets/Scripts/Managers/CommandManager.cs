@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,7 @@ public class CommandManager : MonoBehaviour
     }
 
     [SerializeField] private List<ObjectData> listPossibleObjects;
+    public TMP_Text commandText;
 
     private Command currentCommand;
 
@@ -30,8 +32,14 @@ public class CommandManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("test");
-            Debug.Log(ValidateCommand());
+            if (ValidateCommand())
+            {
+                commandText.text = "La commande est bonne !";
+            }
+            else
+            {
+                commandText.text = "Commande ratée...";
+            }
         }
     }
 
@@ -48,6 +56,11 @@ public class CommandManager : MonoBehaviour
         {
             int randomObject = Random.Range(0, listPossibleObjects.Count);
             listCommand.Add(listPossibleObjects[randomObject]);
+        }
+
+        foreach (var objects in listCommand)
+        {
+            commandText.text += objects.objectID + "\n";
         }
         return listCommand;
     }

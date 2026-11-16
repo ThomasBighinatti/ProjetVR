@@ -15,4 +15,4 @@ MonoBehaviour:
   price: 10
   profit: 15
   types: 02000000i
-  objectID: idCandle
+  objectID: Candle
